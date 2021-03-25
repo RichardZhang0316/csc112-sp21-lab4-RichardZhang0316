@@ -1,6 +1,14 @@
+/*
+Richard Zhang
+Lab4
+3/19/2021
+CSC112
+ */
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
+import java.io.BufferedReader;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,16 +24,9 @@ public class Main {
     private static ArrayList<Vehicle> inventory = new ArrayList<Vehicle>();
 
     public static void main(String[] args) {
-
-
-
-
         readInput();
-
         DisplayTaxResult();
-
         return;
-
     }
 
     // simple method to display output in a TextArea in a JPanel in a JFrame
@@ -78,7 +79,50 @@ public class Main {
     // error message
 
     private static void readInput() {
+        //open myvehicles as a Scanner
+        BufferedReader br=null;
+        try {
+            br = new BufferedReader(new FileReader("src/myvehicles"));
+        }
+        catch(FileNotFoundException e){
+            System.out.println("cannot find the file");
+        }
+             while(true) {
+                 try {
+                     String line = br.readLine();
+                     //as long as there is a line to read
+                     if (line == null) {
+                         break;
+                     }
+                     Scanner sc = new Scanner(line);
+                     sc.useDelimiter(",");
+                     //read the classification as a string (vehicle, car, truck)
+                     String vehicleType = sc.next();
+                     //add a new car to the inventory
+                     if (vehicleType.equals("car")) {
+                         inventory.add(new Car(sc.next(), sc.next(), sc.nextDouble(), sc.nextInt(), sc.next(), sc.nextBoolean(), sc.nextInt()));
+                     }
+                     //add a new truck to the inventory
+                     else if (vehicleType.equals("truck")) {
+                         inventory.add(new Truck(sc.next(), sc.next(), sc.nextDouble(), sc.nextInt(), sc.nextDouble()));
+                     }
+                     //add a new vehicle in the inventory
+                     else if (vehicleType.equals("vehicle")) {
+                         inventory.add(new Vehicle(sc.next(), sc.next(), sc.nextDouble(), sc.nextInt()));
+                     }
+
+                 } catch (IOException ex) {
+                     throw new RuntimeException(ex.toString());
+                 }
+             }
+             try {
+                 br.close();
+             }
+             catch(IOException ex){
+                 throw new RuntimeException(ex.toString());
+            }
 
 
-    }
+        }
+
 }

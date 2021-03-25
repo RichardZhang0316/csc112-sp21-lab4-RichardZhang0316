@@ -1,9 +1,16 @@
+/*
+Richard Zhang
+Lab4
+3/19/2021
+CSC112
+ */
 public class Truck extends Vehicle {
 
     private double Tweight;         // truck weight rating
 
     public Truck(String Xtag, String Xvin, double Xpprice, int Xpyear, double nTweight){
-
+        super(Xtag, Xvin, Xpprice, Xpyear);
+        Tweight=nTweight;
     }
 
     public Venum getType(){
@@ -12,10 +19,14 @@ public class Truck extends Vehicle {
 
     // Truck tax is a $50.75 fee + basic vehicle tax
     public double getTax(){
-
+        double totalTax=super.getTax()+50.75;
+        if(Tweight>2){
+            totalTax+=100*Tweight;
+        }
+        return totalTax;
     }
 
     public String toString(){
-        return "????";
+        return (super.toString()+"\ntruck weight rating"+Tweight);
     }
 }

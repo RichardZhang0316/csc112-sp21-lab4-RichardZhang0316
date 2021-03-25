@@ -1,3 +1,9 @@
+/*
+Richard Zhang
+Lab4
+3/19/2021
+CSC112
+ */
 // Car class which inherits (extends) the Vehicle class
 //
 //  David John
@@ -18,8 +24,10 @@ public class Car extends Vehicle {
     // Car constructor
     public Car(String Xtag, String Xvin, double Xpprice, int Xpyear, String XmodelName,
                boolean Xwt, int Xnd){
-
-
+        super(Xtag, Xvin, Xpprice, Xpyear);
+        CmodelName=XmodelName;
+        Cwindowtint=Xwt;
+        Cnumdoors=Xnd;
     }
 
     // overrides Vehicle method
@@ -29,11 +37,18 @@ public class Car extends Vehicle {
 
     // overrides Vehicle method
     public double getTax(){
-        return 0.00;
+        double totalTax=super.getTax()+17.45;
+        if(Cwindowtint){
+            totalTax+=15;
+        }
+        if(Cnumdoors>2){
+            totalTax+=Cnumdoors*4.73;
+        }
+        return totalTax;
     }
 
     // overrides Vehicle method
     public String toString(){
-        return "???";
+        return (super.toString()+"\nmodel name: "+CmodelName+"\nHas tinted windows? "+Cwindowtint+"\nThe number of doors: "+Cnumdoors);
     }
 }
